@@ -9,6 +9,7 @@ module.exports = async function(deployer) {
     await deployer.deploy(MyKycContract);
     await deployer.deploy(MyTokenSale, 1, addr[0], MyToken.address, MyKycContract.address);
     let instance = await MyToken.deployed();
-    await instance.transfer(MyTokenSale.address, process.env.INITIAL_TOKENS);
+    // await instance.transfer(MyTokenSale.address, process.env.INITIAL_TOKENS);
+    await instance.addMinter(MyTokenSale.address);
 
 }

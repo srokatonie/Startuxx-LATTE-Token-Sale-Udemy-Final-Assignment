@@ -1,9 +1,9 @@
 pragma solidity 0.6.1;
 
-import "./Crowdsale.sol";
+import "./MintedCrowdsale.sol";
 import "./KycContract.sol";
 
-contract MyTokenSale is Crowdsale {
+contract MyTokenSale is MintedCrowdsale {
 
     KycContract kyc;
 
