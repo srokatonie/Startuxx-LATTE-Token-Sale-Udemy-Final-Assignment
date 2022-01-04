@@ -1,0 +1,1 @@
+<h1>Buy tokens</h1>

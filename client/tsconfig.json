@@ -1,0 +1,10 @@
+{
+  // @ts-ignore
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "svelte"],
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*", "server.js"],
+  "exclude": ["node_modules/*", "__sapper__/*", "public/*"]
+}
