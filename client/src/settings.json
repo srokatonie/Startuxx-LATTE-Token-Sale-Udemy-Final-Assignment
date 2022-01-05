@@ -1,0 +1,9 @@
+{
+  "chainIdDecimal": 1337,
+  "chainName": "Ganache",
+  "mintPriceWei": 1000000000000000000,
+  "mintCurrency": "MATIC",
+  "gasLimit": 3000000,
+  "callFunctionGasAmount": 3000000,
+  "callFunctionGasPrice": 30400
+}

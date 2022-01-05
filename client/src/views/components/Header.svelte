@@ -1,5 +1,38 @@
-<script>
+<script lang="ts">
+  import Metamask from './Metamask.svelte'
+  import { connectedAddress } from '../../stores';
+  import { connectedChainIdDecimal } from '../../stores';
+  import { totalMinted } from '../../stores';
+  import Helpers from '../../services/helpers'
+  import { onMount } from 'svelte';
+  
+  onMount(async () => {
+    const event = await Helpers.getTotalSold()
+    event.on('data', async () => {
+      Helpers.updateTotalMinted()
+    })
+    Helpers.updateTotalMinted()
+  })
+
   export let currentRoute
+  
+  function parseBadge(value: number): string {
+    if (value) {
+      return value.toString().length > 6 ? value.toString().slice(4) + '...' : value.toString()
+    } else {
+      return '0'
+    }
+  }
+
+  function onHandleUpdate(event) {
+    console.log({eventDetail: event.detail})
+    if ('connectedAddress' in event.detail) {
+      connectedAddress.set(event.detail.connectedAddress)
+    }
+    if ('chainIdDecimal' in event.detail) {
+      connectedChainIdDecimal.set(event.detail.chainIdDecimal)
+    }
+  }
 </script>
 
 <nav class="bg-gray-800">
@@ -16,9 +49,10 @@
           </div>
         </div>
         <div class="ml-10 flex space-x-4 flex-row items-center">
-          <a href="/" class:bg-gray-900="{currentRoute.name == '/'}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center">
+          <a href="/" class:bg-gray-900="{currentRoute.name == '/'}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center relative">
             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path></svg>
             Buy tokens
+            <span class="badge rounded-md border border-transparent text-whote bg-indigo-700 absolute">{parseBadge($totalMinted)} sold</span>
           </a>
           <a href="/kyc" class:bg-gray-900="{currentRoute.name == '/kyc'}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center">
             <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg>
@@ -29,7 +63,18 @@
             FAQ
           </a>
         </div>
+        <Metamask on:update={onHandleUpdate}/>
       </div>
     </div>
   </div>
 </nav>
+
+<style>
+  .badge {
+    top: -9px;
+    right: -14px;
+    padding: 0px 4px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+</style>

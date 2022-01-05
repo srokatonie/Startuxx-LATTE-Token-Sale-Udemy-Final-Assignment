@@ -15,21 +15,15 @@ module.exports = {
     },
     ganache_local: {
       provider: function() {
-        return new HDWalletProvider(process.env.PRIVATE_KEY, "http://127.0.0.1:7545", AccountIndex)
+        return new HDWalletProvider(process.env.PRIVATE_KEY_GANACHE, "http://127.0.0.1:7545", AccountIndex)
       },
       network_id: 5777
     },
     goerli_infura: {
       provider: function() {
-        return new HDWalletProvider(process.env.MNEMONIC, "https://goerli.infura.io/v3/ffa60321cbbd4cfda3352014c556e3c3", AccountIndex)
+        return new HDWalletProvider(process.env.PRIVATE_KEY_GOERLI, "https://goerli.infura.io/v3/263017dad01243f69c8b5beb966e6921", AccountIndex)
       },
       network_id: 5
-    },
-    ropsten_infura: {
-      provider: function() {
-        return new HDWalletProvider(process.env.MNEMONIC, "https://ropsten.infura.io/v3/ffa60321cbbd4cfda3352014c556e3c3", AccountIndex)
-      },
-      network_id: 3
     }
   },
   compilers: {
@@ -37,4 +31,4 @@ module.exports = {
       version: "0.6.1"
     }
   }
-};
+}
