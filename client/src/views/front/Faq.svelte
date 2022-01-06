@@ -19,8 +19,8 @@
 
 <hr class="bg-gray-900 opacity-0 mb-5">
 
-<p><strong class="font-semibold text-gray-800">Are they worth anything?</strong></p>
-<p>Yes, they're worth a lot of sentiment of the developer, who created them.</p>
+<p><strong class="font-semibold text-gray-800">Are these tokens worth anything?</strong></p>
+<p>Yes, they're worth a lot of sentiment of the developer who created their Smart Contract.</p>
 
 
 
