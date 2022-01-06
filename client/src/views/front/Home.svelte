@@ -4,8 +4,7 @@
   import MyTokenSale from "../../contracts/MyTokenSale.json";
   import MyToken from "../../contracts/MyToken.json";
   import { onMount } from 'svelte';
-  import { connectedAddress } from '../../stores'
-  import { totalMinted } from '../../stores'
+  import { connectedAddress, totalMinted } from '../../stores'
   import settings from '../../settings.json'
 
   export let currentRoute
@@ -16,9 +15,9 @@
   let web3: any
   let tokenInstance: any
   let tokenSaleInstance: any
-  let tokenContractAddress: string
+  let tokenSaleContractAddress: string
   let disabled: boolean = false
-  let userTokens: number = 0
+  let userTokens: number|string = 0
   let amountToBuy: number = 1
 
   connectedAddress.subscribe(async (val) => {
@@ -44,7 +43,7 @@
       return null
     }
     
-    tokenContractAddress = MyToken.networks[networkId].address
+    tokenSaleContractAddress = MyTokenSale.networks[networkId].address
 
     tokenInstance = new (web3 as any).eth.Contract(
       MyToken.abi,
@@ -81,7 +80,7 @@
 
   async function onBuyTokens(): Promise<void> {
     if (amountToBuy > 0) {
-      const txResult = await tokenSaleInstance.methods.buyTokens($connectedAddress).send({from: $connectedAddress, value: (web3 as any).utils.toWei(amountToBuy.toString(), 'wei')});
+      const txResult = await tokenSaleInstance.methods.buyTokens($connectedAddress).send({from: $connectedAddress, value: (web3 as any).utils.toWei(amountToBuy.toString(), 'wei')})
     } else {
       alert(`The amount to buy needs to be over 0`)
     }
@@ -91,7 +90,7 @@
 
 <h1 class="text-2xl mb-4 text-gray-700 font-semibold">Buy tokens</h1>
 
-<p class="text-red-500 mb-3 text-xs uppercase flex flex-row items-center font-medium">
+<p class="text-gray-700 mb-3 text-xs uppercase flex flex-row items-center font-medium">
   <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> 
   Please note: this is just a demo project that runs on &nbsp;<strong>Goerli</strong>&nbsp; test network
 </p>
@@ -131,6 +130,8 @@
   </div>
 </div>
 
+{#if tokenSaleContractAddress }
 <div>
-  <p class="text-gray-600 text-xs text-center"><em>Token contract address: {tokenContractAddress}</em></p>
+  <p class="text-gray-600 text-xs text-center"><em>Token sale contract address: <a class="underline" href="https://goerli.etherscan.io/address/{tokenSaleContractAddress}">{tokenSaleContractAddress}</a></em></p>
 </div>
+{/if}

@@ -21,9 +21,12 @@ module.exports = {
     },
     goerli_infura: {
       provider: function() {
-        return new HDWalletProvider(process.env.PRIVATE_KEY_GOERLI, "https://goerli.infura.io/v3/263017dad01243f69c8b5beb966e6921", AccountIndex)
+        return new HDWalletProvider(process.env.PRIVATE_KEY_GOERLI, process.env.INFURA_HTTP_ENDPOINT, AccountIndex)
       },
-      network_id: 5
+      network_id: 5, 
+      skipDryRun: true,
+      gas: 5000000,
+      gasPrice: 25000000000
     }
   },
   compilers: {
