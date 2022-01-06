@@ -23,5 +23,7 @@
 <p><strong class="font-semibold text-gray-800">Are these tokens worth anything?</strong></p>
 <p>Yes, they're worth a lot of sentiment of the developer who created their Smart Contract.</p>
 
+<hr class="bg-gray-100 min-h-full min-w-full h-full hidden">
+
 
 
