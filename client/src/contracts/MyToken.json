@@ -1142,12 +1142,12 @@
         }
       },
       "links": {},
-      "address": "0x4ddA00ABf530A5448ebF512de159463fa228CdD5",
-      "transactionHash": "0xc348462c8d4e4fa7fe94b13997e455ba8c74ee5a178ad7b6868bacd7a25ef942"
+      "address": "0xEDC95FFc6C0A1b449F682829667852Ea0C801933",
+      "transactionHash": "0xdc26a377770dfc37855938b67d2b2469429d0d574bfc24222beda1c79db2df5f"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-01-05T17:57:25.022Z",
+  "updatedAt": "2022-01-06T20:26:43.475Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Extension of {ERC20} that adds a set of accounts with the {MinterRole}, which have permission to mint (create) new tokens as they see fit.  * At construction, the deployer of the contract is the only minter.",

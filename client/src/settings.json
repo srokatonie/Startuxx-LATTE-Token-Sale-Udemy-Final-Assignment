@@ -1,4 +1,5 @@
 {
+  "networkId": 5777,
   "chainIdDecimal": 1337,
   "chainName": "Ganache",
   "mintPriceWei": 1000000000000000000,

@@ -1,12 +1,12 @@
 <script lang="ts">
   import BigButton from '../components/BigButton.svelte'
   import getWeb3 from '../../services/web3-service';
-  import KycContract from "../../contracts/KycContract.json";
   import MyTokenSale from "../../contracts/MyTokenSale.json";
   import MyToken from "../../contracts/MyToken.json";
   import { onMount } from 'svelte';
   import { connectedAddress } from '../../stores'
   import { totalMinted } from '../../stores'
+  import settings from '../../settings.json'
 
   export let currentRoute
   export let params
@@ -21,6 +21,14 @@
   let userTokens: number = 0
   let amountToBuy: number = 1
 
+  connectedAddress.subscribe(async (val) => {
+    if (val) {
+      disabled = false
+    } else {
+      disabled = true
+    }
+  })
+
   onMount(async (): Promise<void> => {
     web3 = await getWeb3()
 
@@ -30,6 +38,12 @@
     }
 
     const networkId = await (web3 as any).eth.net.getId()
+
+    if (!networkId || networkId != settings.networkId) {
+      console.log('Unsupported network')
+      return null
+    }
+    
     tokenContractAddress = MyToken.networks[networkId].address
 
     tokenInstance = new (web3 as any).eth.Contract(
@@ -41,10 +55,6 @@
       MyTokenSale.abi,
       MyTokenSale.networks[networkId] && MyTokenSale.networks[networkId].address,
     )
-    // const kycInstance = new (web3 as any).eth.Contract(
-    //   KycContract.abi,
-    //   KycContract.networks[networkId] && KycContract.networks[networkId].address,
-    // )
 
     tokenInstance.events.Transfer({to: $connectedAddress}).on('data', updateUserTokens)
     tokenSaleInstance.events.TokensPurchased().on('data', updateTotalMinted)
@@ -55,7 +65,9 @@
   })
 
   const updateUserTokens = async (): Promise<void> => {
-    userTokens = await tokenInstance.methods.balanceOf($connectedAddress).call()
+    if ($connectedAddress) {
+      userTokens = await tokenInstance.methods.balanceOf($connectedAddress).call()
+    }
   }
 
   const updateTotalMinted = async (): Promise<void> => {
@@ -81,7 +93,7 @@
 
 <p class="text-red-500 mb-3 text-xs uppercase flex flex-row items-center font-medium">
   <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> 
-  Please note: this is just a demo project that runs on Goerli test network
+  Please note: this is just a demo project that runs on &nbsp;<strong>Goerli</strong>&nbsp; test network
 </p>
 
 <div class="bg-white shadow overflow-hidden sm:rounded-lg my-5">

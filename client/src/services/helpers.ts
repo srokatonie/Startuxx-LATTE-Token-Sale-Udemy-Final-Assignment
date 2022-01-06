@@ -1,6 +1,7 @@
 import getWeb3 from './web3-service';
 import MyTokenSale from "../contracts/MyTokenSale.json";
 import { totalMinted } from '../stores'
+import settings from '../settings.json'
 
 const getTotalSold = async () => {
   const web3 = await getWeb3()
@@ -11,6 +12,11 @@ const getTotalSold = async () => {
   }
   
   const networkId = await web3['eth'].net.getId()
+
+  if (!networkId || networkId != settings.networkId) {
+    console.log('Unsupported network')
+    return null
+  }
   
   const tokenSaleInstance = new web3['eth'].Contract(
     MyTokenSale.abi,
@@ -30,6 +36,11 @@ const updateTotalMinted = async () => {
   }
   
   const networkId = await web3['eth'].net.getId()
+
+  if (!networkId || networkId != settings.networkId) {
+    console.log('Unsupported network')
+    return null
+  }
   
   const tokenSaleInstance = new web3['eth'].Contract(
     MyTokenSale.abi,

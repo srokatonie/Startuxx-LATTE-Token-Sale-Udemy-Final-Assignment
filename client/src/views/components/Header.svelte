@@ -8,10 +8,12 @@
   
   onMount(async () => {
     const event = await Helpers.getTotalSold()
-    event.on('data', async () => {
+    if (event) {
+      event.on('data', async () => {
+        Helpers.updateTotalMinted()
+      })
       Helpers.updateTotalMinted()
-    })
-    Helpers.updateTotalMinted()
+    }
   })
 
   export let currentRoute

@@ -6,6 +6,21 @@
   console.log(params)
 </script>
 
-<h1>Faq</h1>
+<h1 class="text-2xl mb-4 text-gray-700 font-semibold">FAQ</h1>
 
-<div class="bg-emerald-600 text-white">Test</div>
+<p><strong class="font-semibold text-gray-800">How can I buy tokens?</strong></p>
+<p>You have to <a class="underline text-indigo-700" href="/kyc">whitelist</a> your address first, then you can buy them! Make sure your Metamask is connected to Goerli test network and <a class="underline text-indigo-700" href="https://faucets.chain.link/goerli">has some funds</a>.</p>
+
+<hr class="bg-gray-900 opacity-0 mb-5">
+
+<p><strong class="font-semibold text-gray-800">How come can I whitelist myself?</strong></p>
+<p>The KYC Smart Contract has been changed so anyone can test:</p>
+<p><img src="/kyc-contract.png" alt="KYC Contract"></p>
+
+<hr class="bg-gray-900 opacity-0 mb-5">
+
+<p><strong class="font-semibold text-gray-800">Are they worth anything?</strong></p>
+<p>Yes, they're worth a lot of sentiment of the developer, who created them.</p>
+
+
+
