@@ -126,7 +126,7 @@
     </div>
   </div>
   <div class="ml-1">
-    <BigButton on:click="{onBuyTokens}" bgColor="bg-indigo-700" label="Buy tokens" disabled="{disabled}" />
+    <BigButton on:click="{onBuyTokens}" bgColor="bg-indigo-700" label="Buy LATTE tokens" disabled="{disabled}" />
   </div>
 </div>
 
